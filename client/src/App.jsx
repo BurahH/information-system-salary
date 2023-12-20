@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Context } from './main';
 import { observer } from 'mobx-react-lite';
+import AppRouter from './components/AppRouter';
+import { BrowserRouter } from 'react-router-dom';
 
 const App = observer(() => {
-  const {user} = useContext(Context)
-  console.log(user.isAuth)
-
-	return <div>HELLO WORLD</div>
+	return (
+		<BrowserRouter>
+			<AppRouter />
+		</BrowserRouter>
+	);
 });
 
 export default App;
