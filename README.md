@@ -1,0 +1,1 @@
+# information-system-salary
