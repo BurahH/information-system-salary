@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Container, Row } from 'react-bootstrap';
 
 const NewAdmin = () => {
-  return (
-    <div>NewAdmin</div>
-  )
-}
+	return (
+		<Container>
+			<Row className="fs-3 fw-bold justify-content-center">ДОБАВЛЕНИЕ БУХГАЛТЕРОВ И АДМИНИСТРАТОРОВ</Row>
+		</Container>
+	);
+};
 
-export default NewAdmin
+export default NewAdmin;

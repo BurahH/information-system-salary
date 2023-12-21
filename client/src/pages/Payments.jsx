@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 
 const Payments = () => {
 	return (
 		<Container>
-			<Table striped bordered hover className='text-center'>
+			<Row className="fs-3 fw-bold justify-content-center">ВЫПЛАТЫ</Row>
+			<Table striped bordered hover className='text-center mt-4'>
 				<thead>
 					<tr>
 						<th>#</th>
