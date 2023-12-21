@@ -26,11 +26,20 @@ const Profile = () => {
           <Row>{user.role}</Row>
           <Row>{user.ilneses.length === 0 ? <h2>Не болел</h2> : <div>
             <h2>БОЛЕЗНИ</h2>
-            {user.ilneses.map(ilness => <Card key={ilness.id}>
+            {user.ilneses.map(ilness => <Card key={ilness.id} className='p-2 mb-2'>
               <div>{ilness.id}</div>
               <div>{new Date(ilness.date_start).toLocaleDateString('ru-RU')}</div>
               <div>{new Date(ilness.date_end).toLocaleDateString('ru-RU')}</div>
               <div>{ilness.information}</div>
+            </Card>)}
+          </div> }</Row>
+          <Row>{user.bonuses.length === 0 ? <h2>Нет надбавок</h2> : <div>
+            <h2>Надбавки</h2>
+            {user.bonuses.map(bonus => <Card key={bonus.id} className='p-2 mb-2'>
+              <div>{bonus.id}</div>
+              <div>{bonus.bonus}</div>
+              <div>{new Date(bonus.date).toLocaleDateString('ru-RU')}</div>
+              <div>{bonus.information}</div>
             </Card>)}
           </div> }</Row>
         </Col>

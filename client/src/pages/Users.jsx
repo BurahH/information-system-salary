@@ -44,7 +44,7 @@ const Users = () => {
 				</thead>
 				<tbody>
 					{searchedUsers.map(user => (
-						<tr onClick={() => navigate(PROFILE_ROUTE + '/' + user.id)}>
+						<tr onClick={() => navigate(PROFILE_ROUTE + '/' + user.id)} style={{cursor: 'pointer'}}>
 							<td>{user.id}</td>
 							<td>{user.personal_number}</td>
 							<td>{user.name}</td>

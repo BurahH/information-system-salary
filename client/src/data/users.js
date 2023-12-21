@@ -40,7 +40,8 @@ export const usersData = [
     family: 'Женат',
     children: 3,
     role: 'Работник',
-    ilneses: []
+    ilneses: [],
+    bonuses: []
   },
   {
     id: 3,
@@ -51,7 +52,8 @@ export const usersData = [
     family: 'Женат',
     children: 3,
     role: 'Работник',
-    ilneses: []
+    ilneses: [],
+    bonuses: []
   },
   {
     id: 4,
@@ -62,7 +64,8 @@ export const usersData = [
     family: 'Женат',
     children: 3,
     role: 'Работник',
-    ilneses: []
+    ilneses: [],
+    bonuses: []
   },
   {
     id: 5,
@@ -73,7 +76,8 @@ export const usersData = [
     family: 'Женат',
     children: 3,
     role: 'Работник',
-    ilneses: []
+    ilneses: [],
+    bonuses: []
   },
   {
     id: 6,
@@ -84,7 +88,8 @@ export const usersData = [
     family: 'Женат',
     children: 3,
     role: 'Работник',
-    ilneses: []
+    ilneses: [],
+    bonuses: []
   },
   {
     id: 7,
@@ -95,7 +100,8 @@ export const usersData = [
     family: 'Женат',
     children: 3,
     role: 'Работник',
-    ilneses: []
+    ilneses: [],
+    bonuses: []
   },
   
 ]
