@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import { Context } from '../main';
 import { useNavigate } from 'react-router-dom';
-import { USERS_ROUTE } from '../routes/consts';
+import { PAYMENTS_ROUTE, USERS_ROUTE } from '../routes/consts';
 
 const Authorization = observer(() => {
   const { user } = useContext(Context);
@@ -19,7 +19,7 @@ const Authorization = observer(() => {
 
   const handleSubmit = () => {
     user.setIsAuth(true);
-    navigate(USERS_ROUTE)
+    navigate(PAYMENTS_ROUTE)
 
   }
 
