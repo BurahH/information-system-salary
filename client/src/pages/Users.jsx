@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Container, Form, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { usersData } from '../data/users';
 import { useNavigate } from 'react-router-dom';
 import { PROFILE_ROUTE } from '../routes/consts';
 import { getUsers } from '../API/userAPI';
@@ -38,12 +37,12 @@ const Users = () => {
 			</Row>
 			<Table striped bordered hover className="text-center mt-4">
 				<thead>
-					<tr>
+					<tr className='table-primary'>
 						<th>#</th>
-						<th>Номер</th>
+						<th>Номер сотрудника</th>
 						<th>ФИО</th>
 						<th>Должность</th>
-						<th>Оклад</th>
+						<th>Зарплата</th>
 						<th>Семейное положение</th>
 						<th>Число детей</th>
 						<th>Роль</th>

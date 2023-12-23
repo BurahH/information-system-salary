@@ -51,7 +51,7 @@ const Payments = () => {
 
 	return (
 		<Container className="mb-4">
-			<Row className="fs-3 fw-bold justify-content-center mb-3">ВЫПЛАТЫ</Row>
+			<Row className="fs-3 fw-bold justify-content-center mb-2">ВЫПЛАТЫ</Row>
 			<Row>
 				<Form className="d-flex">
 					<Form.Select
@@ -62,7 +62,7 @@ const Payments = () => {
 						value={year}
 						onChange={handleYearChange}
 					>
-						<option selected hidden>
+						<option value={0} hidden>
 							Выберете год
 						</option>
 						<option value={2020}>2020</option>
@@ -79,7 +79,7 @@ const Payments = () => {
 						value={month}
 						onChange={handleMonthChange}
 					>
-						<option selected hidden>
+						<option value={0} hidden>
 							Выберете месяц
 						</option>
 						<option value={1}>Январь</option>
@@ -101,11 +101,11 @@ const Payments = () => {
 				<>
 					<Table striped bordered hover className="text-center mt-4">
 						<thead>
-							<tr>
+							<tr className='table-primary'>
 								<th>Номер сотрудника</th>
 								<th>ФИО</th>
-								<th>Зарплата</th>
-								<th>Надбавки</th>
+								<th>Зарплата (руб.)</th>
+								<th>Надбавки (руб.)</th>
 								<th>Дней болезни</th>
 								<th>Дата выплаты</th>
 								<th>Начислено (руб.)</th>
@@ -184,7 +184,7 @@ const Payments = () => {
 									const file = new Blob([excelBuffer], {
 										type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
 									});
-									FileSaver.saveAs(file, 'Отчет.xlsx');
+									FileSaver.saveAs(file, `Отчет_${year}_${month}.xlsx`);
 								}}
 							>
 								СКАЧАТЬ

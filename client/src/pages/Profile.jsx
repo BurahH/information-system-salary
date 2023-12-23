@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Col, Container, Row, Badge, Accordion } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { getUserById } from '../API/userAPI';
 import { useQuery } from '@tanstack/react-query';
@@ -10,72 +10,71 @@ const Profile = () => {
 	const { data } = useQuery({
 		queryKey: [`user${id}`, id],
 		queryFn: async () => getUserById(id),
-    enabled: !!id
+		enabled: !!id,
 	});
 
-  console.log(data)
+	console.log(data);
 
 	return (
 		<Container>
 			<Row className="fs-3 fw-bold justify-content-center">ПРОФИЛЬ</Row>
-			<Row>
-				<Col>
-					<Image src="/profile.png" style={{ width: 200 }} />
-				</Col>
-				{data && (
+			{data && (
+				<Row className="d-flex">
 					<Col>
-						<Row>{data.id}</Row>
-						<Row>{data.name}</Row>
-						<Row>{data.personal_number}</Row>
-						<Row>{data.position}</Row>
-						<Row>{data.salary}</Row>
-						<Row>{data.family}</Row>
-						<Row>{data.children}</Row>
-						<Row>{data.role}</Row>
-						{/* <Row>
-							{data.ilneses.length === 0 ? (
-								<h2>Не болел</h2>
-							) : (
-								<div>
-									<h2>БОЛЕЗНИ</h2>
-									{data.ilneses.map(ilness => (
-										<Card key={ilness.id} className="p-2 mb-2">
-											<div>{ilness.id}</div>
-											<div>
-												{new Date(ilness.date_start).toLocaleDateString(
-													'ru-RU'
-												)}
-											</div>
-											<div>
-												{new Date(ilness.date_end).toLocaleDateString('ru-RU')}
-											</div>
-											<div>{ilness.information}</div>
-										</Card>
-									))}
-								</div>
-							)}
-						</Row>
-						<Row>
-							{data.bonuses.length === 0 ? (
-								<h2>Нет надбавок</h2>
-							) : (
-								<div>
-									<h2>Надбавки</h2>
-									{data.bonuses.map(bonus => (
-										<Card key={bonus.id} className="p-2 mb-2">
-											<div>{bonus.id}</div>
-											<div>{bonus.bonus}</div>
-											<div>
-												{new Date(bonus.date).toLocaleDateString('ru-RU')}
-											</div>
-											<div>{bonus.information}</div>
-										</Card>
-									))}
-								</div>
-							)}
-						</Row> */}
+						<h1>{data.name} </h1>
+					</Col>{' '}
+					<Col className="d-flex">
+						<h4 className="ms-auto mt-3">
+							<Badge bg="secondary">#{data.id}</Badge>
+						</h4>
 					</Col>
+				</Row>
+			)}
+			<Row>
+				{data && (
+					<div style={{ display: 'flex', gap: '20px' }}>
+						<div>Номер: {data.personalNumber}</div>
+						<div>Должность: {data.position}</div>
+						<div>Зарплата: {data.salary}</div>
+						<div>Семейное положение: {data.family}</div>
+						<div>Количество детей: {data.children}</div>
+						<div>Роль: {data.role || 'Работник'}</div>
+					</div>
 				)}
+			</Row>
+			<Row className='mt-4'>
+				<Col>
+					<Accordion>
+						<Accordion.Item eventKey="0">
+							<Accordion.Header>Надбавки</Accordion.Header>
+							<Accordion.Body>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</Accordion.Body>
+						</Accordion.Item>
+					</Accordion>
+				</Col>
+				<Col>
+					<Accordion>
+						<Accordion.Item eventKey="0">
+							<Accordion.Header>Болезни</Accordion.Header>
+							<Accordion.Body>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</Accordion.Body>
+						</Accordion.Item>
+					</Accordion>
+				</Col>
 			</Row>
 		</Container>
 	);

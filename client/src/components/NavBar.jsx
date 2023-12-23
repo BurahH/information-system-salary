@@ -110,7 +110,7 @@ const NavBar = observer(() => {
 									navigate(USERS_ROUTE);
 									handleClose();
 								}}							>
-								Список пользователей
+								Список сотрудников
 							</Button>
 							<Button
 								variant="outline-dark"
@@ -119,7 +119,7 @@ const NavBar = observer(() => {
 									navigate(NEW_USER_ROUTE);
 									handleClose();
 								}}							>
-								Добавление работников
+								Добавление сотрудников
 							</Button>
 							<Button
 								variant="outline-dark"
