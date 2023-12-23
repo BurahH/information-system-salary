@@ -11,7 +11,7 @@ const authInterceptor = config => {
 	return config;
 };
 
-$API.interceptors.request.use(authInterceptor);
+// $API.interceptors.request.use(authInterceptor);
 
 export const handleApiError = async error => {
 	try {
