@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Row } from 'react-bootstrap';
+import { Button, Container, Row, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { paymentsData } from '../data/payments';
-// import * as FileSaver from 'file-saver';
-// import * as XLSX from 'xlsx';
-import { $API } from '../API';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 import { getDate, getNDS } from '../utils/helpers';
 import { getPayments } from '../API/userAPI';
 import { useQuery } from '@tanstack/react-query';
 
 const Payments = () => {
+	const [year, setYear] = useState('');
+	const [month, setMonth] = useState('');
+
 	const { data } = useQuery({
-		queryKey: ['payments'],
-		queryFn: async () => getPayments(11, 2023),
+		queryKey: ['payments', year, month],
+		queryFn: async () => getPayments(month, year),
+		enabled: !!year && !!month,
 	});
 
 	const [final, setFinal] = useState({ sum: 0, NDS: 0, vidacha: 0 });
@@ -39,70 +41,160 @@ const Payments = () => {
 		}
 	}, [data]);
 
+	const handleYearChange = e => {
+		setYear(e.target.value);
+	};
+
+	const handleMonthChange = e => {
+		setMonth(e.target.value);
+	};
+
 	return (
-		<Container>
-			<Row className="fs-3 fw-bold justify-content-center">ВЫПЛАТЫ</Row>
-			<Table striped bordered hover className="text-center mt-4">
-				<thead>
-					<tr>
-						<th>Номер сотрудника</th>
-						<th>ФИО</th>
-						<th>Зарплата</th>
-						<th>Надбавки</th>
-						<th>Дней болезни</th>
-						<th>Дата выплаты</th>
-						<th>Начислено (руб.)</th>
-						<th>НДС (руб.)</th>
-						<th>К выдаче (руб.)</th>
-					</tr>
-				</thead>
-				<tbody>
-					{data &&
-						data.map(payment => (
-							<tr key={payment.id}>
-								<td>{payment.employee.personalNumber}</td>
-								<td>{payment.employee.name}</td>
-								<td>{payment.salary}</td>
-								<td>{payment.summaAllowance}</td>
-								<td>{payment.dayDisease}</td>
-								<td>{getDate(payment.dayPayment)}</td>
-								<td>{payment.summaPayment}</td>
-								<td>{getNDS(payment.summaPayment, payment.salary)}</td>
-								<td className="fw-bold">
-									{payment.summaPayment -
-										getNDS(payment.summaPayment, payment.salary)}
-								</td>
-							</tr>
-						))}
-					<tr>
-						<td colSpan={6}></td>
-						<td>Итого: {final.sum} </td>
-						<td>Итого: {final.NDS}</td>
-						<td className="fw-bold">Итого: {final.vidacha}</td>
-					</tr>
-				</tbody>
-			</Table>
-			<Row className="d-flex justify-content-end">
-				<div className="ms-auto">
-					<Button
-						variant="outline-success"
-						onClick={() => {
-							// const ws = XLSX.utils.json_to_sheet(payments);
-							// const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
-							// const excelBuffer = XLSX.write(wb, {
-							// 	bookType: 'xlsx',
-							// 	type: 'array',
-							// });
-							// const file = new Blob([excelBuffer], {
-							// 	type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
-							// });
-							// FileSaver.saveAs(file, 'example.xlsx');
-						}}
+		<Container className="mb-4">
+			<Row className="fs-3 fw-bold justify-content-center mb-3">ВЫПЛАТЫ</Row>
+			<Row>
+				<Form className="d-flex">
+					<Form.Select
+						aria-label="Year"
+						style={{ width: 150 }}
+						className="ms-3"
+						required
+						value={year}
+						onChange={handleYearChange}
 					>
-						СКАЧАТЬ
-					</Button>
-				</div>
+						<option selected hidden>
+							Выберете год
+						</option>
+						<option value={2020}>2020</option>
+						<option value={2021}>2021</option>
+						<option value={2022}>2022</option>
+						<option value={2023}>2023</option>
+						<option value={2024}>2024</option>
+					</Form.Select>
+					<Form.Select
+						aria-label="Month"
+						style={{ width: 170 }}
+						className="ms-3"
+						required
+						value={month}
+						onChange={handleMonthChange}
+					>
+						<option selected hidden>
+							Выберете месяц
+						</option>
+						<option value={1}>Январь</option>
+						<option value={2}>Февраль</option>
+						<option value={3}>Март</option>
+						<option value={4}>Апрель</option>
+						<option value={5}>Май</option>
+						<option value={6}>Июнь</option>
+						<option value={7}>Июль</option>
+						<option value={8}>Август</option>
+						<option value={9}>Сентябрь</option>
+						<option value={10}>Октябрь</option>
+						<option value={11}>Ноябрь</option>
+						<option value={12}>Декабрь</option>
+					</Form.Select>
+				</Form>
 			</Row>
+			{data?.length ? (
+				<>
+					<Table striped bordered hover className="text-center mt-4">
+						<thead>
+							<tr>
+								<th>Номер сотрудника</th>
+								<th>ФИО</th>
+								<th>Зарплата</th>
+								<th>Надбавки</th>
+								<th>Дней болезни</th>
+								<th>Дата выплаты</th>
+								<th>Начислено (руб.)</th>
+								<th>НДС (руб.)</th>
+								<th>К выдаче (руб.)</th>
+							</tr>
+						</thead>
+						<tbody>
+							{data &&
+								data.map(payment => (
+									<tr key={payment.id}>
+										<td>{payment.employee.personalNumber}</td>
+										<td>{payment.employee.name}</td>
+										<td>{payment.salary}</td>
+										<td>{payment.summaAllowance}</td>
+										<td>{payment.dayDisease}</td>
+										<td>{getDate(payment.dayPayment)}</td>
+										<td>{payment.summaPayment}</td>
+										<td>{getNDS(payment.summaPayment, payment.salary)}</td>
+										<td className="fw-bold">
+											{payment.summaPayment -
+												getNDS(payment.summaPayment, payment.salary)}
+										</td>
+									</tr>
+								))}
+							<tr>
+								<td colSpan={6} className="text-end">
+									Итого:
+								</td>
+								<td>{final.sum} </td>
+								<td>{final.NDS}</td>
+								<td className="fw-bold">{final.vidacha}</td>
+							</tr>
+						</tbody>
+					</Table>
+					{data && (
+						<Row className="d-flex justify-content-end">
+							<Button
+								style={{ width: 160 }}
+								className="me-2"
+								variant="outline-success"
+								onClick={() => {
+									const info = data.map(payment => {
+										return {
+											Номер_сотрудника: payment.employee.personalNumber,
+											ФИО: payment.employee.name,
+											Зарплата: payment.employee.salary,
+											Надбавки: payment.summaAllowance,
+											Дней_болезни: payment.dayDisease,
+											Дата_выплаты: getDate(payment.dayPayment),
+											Начислено_руб: payment.summaPayment,
+											НДС_руб: getNDS(payment.summaPayment, payment.salary),
+											К_выдаче_руб:
+												payment.summaPayment -
+												getNDS(payment.summaPayment, payment.salary),
+										};
+									});
+									info.push({
+										Номер_сотрудника: 'Итого:',
+										ФИО: '',
+										Зарплата: '',
+										Надбавки: '',
+										Дней_болезни: '',
+										Дата_выплаты: '',
+										Начислено_руб: final.sum,
+										НДС_руб: final.NDS,
+										К_выдаче_руб: final.vidacha,
+									});
+
+									const ws = XLSX.utils.json_to_sheet(info);
+									const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+									const excelBuffer = XLSX.write(wb, {
+										bookType: 'xlsx',
+										type: 'array',
+									});
+									const file = new Blob([excelBuffer], {
+										type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+									});
+									FileSaver.saveAs(file, 'Отчет.xlsx');
+								}}
+							>
+								СКАЧАТЬ
+							</Button>
+						</Row>
+					)}
+				</>
+			) : (
+				<Row className='d-flex justify-content-center fs-2 fw-bold mt-5'>Нет информации о данном периоде</Row>
+			)}
 		</Container>
 	);
 };

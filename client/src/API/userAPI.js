@@ -31,7 +31,7 @@ export const getUserById = async id => {
 	return data;
 };
 
-export const getPayments = async (month = 11, year = 2023) => {
+export const getPayments = async (month, year) => {
 	const { data } = await $API.get(
 		`http://26.162.53.239:8080/payment?month=${month}&year=${year}`
 	);
