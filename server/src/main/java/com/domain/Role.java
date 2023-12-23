@@ -1,12 +1,13 @@
 package com.domain;
 
-import org.springframework.security.core.GrantedAuthority;
 
-public enum Role  implements GrantedAuthority {
-    USER, ADMIN;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    @Override
-    public String getAuthority() {
-        return name();
-    }
+public enum Role{
+    @JsonProperty("user")
+    USER,
+    @JsonProperty("admin")
+    ADMIN,
+    @JsonProperty("block")
+    BLOCK;
 }
