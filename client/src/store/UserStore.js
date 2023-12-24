@@ -4,9 +4,9 @@ export default class UserStore {
 	constructor() {
 		this._isAuth = true;
 		this._info = {
-			id: 1,
-			name: 'Кирилл Андреевич',
-			login: 'kakopylov',
+			id: 4,
+			name: 'Иванов Иван Иванович',
+			login: 'iiIvanov',
 			role: 'Администратор',
 		};
 

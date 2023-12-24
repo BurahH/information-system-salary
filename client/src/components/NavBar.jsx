@@ -7,7 +7,7 @@ import {
 	Navbar,
 	Offcanvas,
 } from 'react-bootstrap';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Context } from '../main';
 import { observer } from 'mobx-react-lite';
 import { FaRubleSign } from 'react-icons/fa';
@@ -121,7 +121,7 @@ const NavBar = observer(() => {
 								}}							>
 								Добавление сотрудников
 							</Button>
-							<Button
+							{/* <Button
 								variant="outline-dark"
 								className="mb-4 p-3"
                 onClick={() => {
@@ -129,7 +129,7 @@ const NavBar = observer(() => {
 									handleClose();
 								}}							>
 								Добавление бухгалтеров и администраторов
-							</Button>
+							</Button> */}
 						</Container>
 					</Offcanvas.Body>
 				</Offcanvas>

@@ -11,16 +11,20 @@ import {
 } from 'react-bootstrap';
 import { Context } from '../main';
 import { useNavigate } from 'react-router-dom';
-import { PAYMENTS_ROUTE, USERS_ROUTE } from '../routes/consts';
+import { PAYMENTS_ROUTE } from '../routes/consts';
 
 const Authorization = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
 
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleSubmit = () => {
     user.setIsAuth(true);
-    navigate(PAYMENTS_ROUTE)
-
+    navigate(PAYMENTS_ROUTE);
+    setLogin('');
+    setPassword('');
   }
 
 	return (
@@ -43,6 +47,8 @@ const Authorization = observer(() => {
 										type="text"
 										placeholder="Введите логин..."
 										required
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
 									/>
 								</Form.Group>
 
@@ -52,6 +58,8 @@ const Authorization = observer(() => {
 										type="password"
 										placeholder="Введите пароль..."
 										required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
 									/>
 								</Form.Group>
 
