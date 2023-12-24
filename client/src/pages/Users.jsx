@@ -11,6 +11,13 @@ const Users = () => {
 	const [name, setName] = useState('');
 	const { data } = useQuery({ queryKey: ['users'], queryFn: getUsers });
 
+  const test = async () => {
+    const { dat } = await $API.get('http://26.162.53.239:8080/employee');
+    console.log(dat);
+  }
+
+  test();
+  
 	const searchedUsers = useMemo(() => {
 		if (name) {
 			return data.filter(user => user.name.includes(name));
@@ -64,7 +71,7 @@ const Users = () => {
 								<td>{user.salary}</td>
 								<td>{user.family}</td>
 								<td>{user.children}</td>
-								<td>{user.roles || 'Работник'}</td>
+								<td>{user.roles ? user.roles === 'user' ? 'Бухгалтер' : 'Администратор' :'Работник' }</td>
 								<td>{user.active ? 'Активный' : 'Заблокированый'}</td>
 							</tr>
 						))}
