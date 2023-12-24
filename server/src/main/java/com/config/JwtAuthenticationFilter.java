@@ -28,10 +28,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         System.out.println(request.getMethod());
         System.out.println(authHeader);
         String s = request.getServletPath();
-        /*if(authHeader == null && !s.equals("/authenticate"))
+        if(authHeader == null && !s.equals("/authenticate") && !request.getMethod().equals("OPTIONS"))
         {
             throw new ServletException();
-        }*/
+        }
         final String jwt;
         final String userEmail;
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {

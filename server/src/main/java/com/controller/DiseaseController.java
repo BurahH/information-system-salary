@@ -29,7 +29,6 @@ public class DiseaseController {
         return diseaseService.addDisease(id, disease);
     }
 
-    @CrossOrigin
     @GetMapping("/user/get/Disease/{id}")
     public List<Disease> getDiseaseUser(@PathVariable Long id) {
         return diseaseService.getDiseaseUser(id);

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin
+
 @RestController
 public class UserController {
     @Autowired
@@ -79,10 +79,11 @@ public class UserController {
         return user;
     }
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping ("/user")
     public List<User> getAllUser(){
-        return userService.findAllByOrderById();
+        List<User> users = userService.findAllByOrderById();
+        return users;
     }
 
     @CrossOrigin
