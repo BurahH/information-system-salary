@@ -11,7 +11,7 @@ const Payments = () => {
 	const [year, setYear] = useState('');
 	const [month, setMonth] = useState('');
 
-	const { data } = useQuery({
+	const { data, refetch  } = useQuery({
 		queryKey: ['payments', year, month],
 		queryFn: async () => getPayments(month, year),
 		enabled: !!year && !!month,

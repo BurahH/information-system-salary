@@ -45,6 +45,15 @@ export const getDiseasesByUserId = async id => {
 	return data;
 };
 
+export const createNewDisease = async (id, dateBegin, dateEnd, information) => {
+  const {data} = await $API.post(
+    `http://26.162.53.239:8080/diseance/new?id=${id}`,
+    { dateBegin, dateEnd, information}
+  );
+  return data;
+
+}
+
 export const createNewBonus = async (id, summa, information, date) => {
 	const { data } = await $API.post(
 		`http://26.162.53.239:8080/Allowance/new?id=${id}`,

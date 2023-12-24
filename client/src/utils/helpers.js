@@ -8,7 +8,8 @@ export const getNDS = (sum, salary) => {
 	return Math.round(nds * 100) / 100;
 };
 
-export const getTimeStamp = (year, month, day) => {
-	const date = new Date(year, month, day);
-	return date.getTime();
+export const getTimeStamp = (date) => {
+  const [day, month, year] = date.split('.').map(item => Number(item));
+	const timeDate = new Date(year, month - 1 , day);
+	return timeDate.getTime();
 };

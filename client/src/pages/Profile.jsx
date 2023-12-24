@@ -22,6 +22,7 @@ import { getDate, getNDS } from '../utils/helpers';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import CreateBonus from '../components/modals/CreateBonus';
+import CreateDisease from '../components/modals/CreateDisease';
 
 const Profile = () => {
 	const { id } = useParams();
@@ -29,8 +30,7 @@ const Profile = () => {
 	const [year, setYear] = useState('');
 	const [month, setMonth] = useState('');
   const [newBonusVisible, setNewBonusVisible] = useState(false);
-
-  const [kostil1, setKostil1] = useState(true);
+  const [newDiseaseVisible, setNewDiseaseVisible] = useState(false);
 
 	const { data } = useQuery({
 		queryKey: [`user${id}`, id],
@@ -45,7 +45,7 @@ const Profile = () => {
 	});
 
 	const bonuses = useQuery({
-		queryKey: [`bonuses${id}`, kostil1],
+		queryKey: [`bonuses${id}`],
 		queryFn: async () => getBonusesByUserId(id),
 		enabled: !!id,
 	});
@@ -133,7 +133,7 @@ const Profile = () => {
 						<Accordion.Item eventKey="0">
 							<Accordion.Header>Болезни</Accordion.Header>
 							<Accordion.Body>
-								<Button variant="outline-dark">Добавить болезнь</Button>
+								<Button variant="outline-dark" onClick={() => setNewDiseaseVisible(true)}>Добавить болезнь</Button>
 								{diseases?.data?.length ? (
 									<Table striped bordered hover className="text-center mt-4">
 										<thead>
@@ -296,7 +296,8 @@ const Profile = () => {
 					</Row>
 				)}
 			</Row>
-      <CreateBonus show={newBonusVisible} onHide={() => setNewBonusVisible(false)} id={id} toggleCreate={() => setKostil1(prev => !prev)}/>
+      <CreateBonus show={newBonusVisible} onHide={() => setNewBonusVisible(false)} id={id} refetch={() => bonuses.refetch()}/>
+      <CreateDisease show={newDiseaseVisible} onHide={() => setNewDiseaseVisible(false)} id={id} refetch={() => diseases.refetch()}/>
 		</Container>
 	);
 };

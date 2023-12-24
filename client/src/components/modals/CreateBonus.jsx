@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { createNewBonus } from '../../API/userAPI';
 
-const CreateBonus = ({ show, onHide, id, toggleCreate }) => {
+const CreateBonus = ({ show, onHide, id, refetch }) => {
   const [sum, setSum] = useState(0);
   const [info, setInfo] = useState('');
 
@@ -16,7 +16,7 @@ const CreateBonus = ({ show, onHide, id, toggleCreate }) => {
     const date = new Date().getTime();
     const res = await createNewBonus(id, sum, info, date);
     hideNull();
-    toggleCreate();
+    refetch();
     return res;
   }
 
