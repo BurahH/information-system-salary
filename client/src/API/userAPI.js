@@ -31,9 +31,24 @@ export const getUserById = async id => {
 	return data;
 };
 
-export const getPayments = async (month, year) => {
+export const getBonusesByUserId = async id => {
 	const { data } = await $API.get(
-		`http://26.162.53.239:8080/payment?month=${month}&year=${year}`
+		`http://26.162.53.239:8080/user/get/Allowance/${id}`
 	);
-  return data;
+	return data;
+};
+
+export const getDiseasesByUserId = async id => {
+	const { data } = await $API.get(
+		`http://26.162.53.239:8080/user/get/Disease/${id}`
+	);
+	return data;
+};
+
+export const createNewBonus = async (id, summa, information, date) => {
+	const { data } = await $API.post(
+		`http://26.162.53.239:8080/Allowance/new?id=${id}`,
+		{ summa, information, date }
+	);
+	return data;
 };

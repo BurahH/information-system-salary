@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { getDate, getNDS } from '../utils/helpers';
-import { getPayments } from '../API/userAPI';
+import { getPayments } from '../API/paymentsAPI';
 import { useQuery } from '@tanstack/react-query';
 
 const Payments = () => {
