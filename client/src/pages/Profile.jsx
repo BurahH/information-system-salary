@@ -12,10 +12,12 @@ import {
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import {
-  changeUserPass,
+  blockUser,
+	changeUserPass,
 	getBonusesByUserId,
 	getDiseasesByUserId,
 	getUserById,
+  unblockUser,
 } from '../API/userAPI';
 import { useQuery } from '@tanstack/react-query';
 import { getPaymentByUserId } from '../API/paymentsAPI';
@@ -39,7 +41,7 @@ const Profile = observer(() => {
 	const [newBonusVisible, setNewBonusVisible] = useState(false);
 	const [newDiseaseVisible, setNewDiseaseVisible] = useState(false);
 	const [editVisible, setEditVisible] = useState(false);
-  const [newPass, setNewPass] = useState({new: '', confirm: ''});
+	const [newPass, setNewPass] = useState({ new: '', confirm: '' });
 
 	const { data, refetch } = useQuery({
 		queryKey: [`user${id}`, id],
@@ -73,9 +75,19 @@ const Profile = observer(() => {
 		setMonth(e.target.value);
 	};
 
-  const handlePassChange = async () => {
-    const res = await changeUserPass(id, newPass.new);
-    setNewPass({new: '', confirm: ''})
+	const handlePassChange = async () => {
+		const res = await changeUserPass(id, newPass.new);
+		setNewPass({ new: '', confirm: '' });
+	};
+
+	const block = async () => {
+    const res = await blockUser(id);
+    refetch();
+  }
+
+  const unblock = async () => {
+    const res = await unblockUser(id);
+    refetch();
   }
 
 	return (
@@ -99,6 +111,19 @@ const Profile = observer(() => {
 					</Col>
 					<Col className="d-flex">
 						<h4 className="ms-auto mt-3">
+							{user.info.id != id && (
+								<>
+									{data.active ? (
+										<Button variant="outline-danger" className="me-3" onClick={block}>
+											Заблокировать
+										</Button>
+									) : (
+										<Button variant="outline-danger" className="me-3" onClick={unblock}>
+											Разблокировать
+										</Button>
+									)}
+								</>
+							)}
 							<Badge bg="secondary">#{data.id}</Badge>
 						</h4>
 					</Col>
@@ -203,25 +228,33 @@ const Profile = observer(() => {
 					<hr className="mt-3" />
 					<Row>
 						<h1 className="mt-2">Изменение пароля</h1>
-            <Form>
-            <Form.Group className="mb-3" controlId="personalNumber">
+						<Form>
+							<Form.Group className="mb-3" controlId="personalNumber">
 								<Form.Label className="fw-bold">Новый пароль</Form.Label>
 								<Form.Control
 									placeholder="Введите новый пароль..."
 									value={newPass.new}
-                  onChange={e => setNewPass(prev => {return {...prev, new: e.target.value}})}
+									onChange={e =>
+										setNewPass(prev => {
+											return { ...prev, new: e.target.value };
+										})
+									}
 								/>
 							</Form.Group>
-              <Form.Group className="mb-3" controlId="personalNumber">
+							<Form.Group className="mb-3" controlId="personalNumber">
 								<Form.Label className="fw-bold">Подтверждение</Form.Label>
 								<Form.Control
 									placeholder="Подтвердите пароль..."
-                  value={newPass.confirm}
-                  onChange={e => setNewPass(prev => {return {...prev, confirm: e.target.value}})}									
+									value={newPass.confirm}
+									onChange={e =>
+										setNewPass(prev => {
+											return { ...prev, confirm: e.target.value };
+										})
+									}
 								/>
 							</Form.Group>
-              <Button onClick={handlePassChange}>Изменить</Button>
-            </Form>
+							<Button onClick={handlePassChange}>Изменить</Button>
+						</Form>
 					</Row>
 				</>
 			)}

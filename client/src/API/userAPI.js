@@ -95,6 +95,20 @@ export const changeUserPass = async (id, password) => {
 	return data;
 };
 
+export const blockUser = async (id) => {
+  const {data} = await $API.post(
+    `http://26.162.53.239:8080/block?id=${id}`
+  )
+  return data;
+}
+
+export const unblockUser = async (id) => {
+  const {data} = await $API.post(
+    `http://26.162.53.239:8080/unblock?id=${id}`
+  )
+  return data;
+}
+
 export const getUserById = async id => {
 	const { data } = await $API.get(
 		`http://26.162.53.239:8080/employee/get/${id}`
