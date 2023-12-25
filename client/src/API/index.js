@@ -7,7 +7,14 @@ export const $API = axios.create({
 });
 
 const authInterceptor = config => {
-	config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
+  const token = localStorage.getItem('token')
+  
+  if (token) {
+    config.headers.authorization = `Bearer ${token}`;
+  }
+
+  // config.headers.authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiIiwiaWF0IjoxNzAzNDU5NDkzLCJleHAiOjE3MDM0NjA5MzN9.YyNEI8_wGoTq0RYEQgig_Yd0Grzfu5OsfJ_do1xDaeM`;
+
 	return config;
 };
 

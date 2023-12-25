@@ -32,6 +32,7 @@ const NavBar = observer(() => {
 
 	const handleLogout = () => {
 		user.setIsAuth(false);
+    localStorage.removeItem('token');
 	};
 
 	return (
@@ -121,15 +122,7 @@ const NavBar = observer(() => {
 								}}							>
 								Добавление сотрудников
 							</Button>
-							{/* <Button
-								variant="outline-dark"
-								className="mb-4 p-3"
-                onClick={() => {
-									navigate(NEW_ADMIN_ROUTE);
-									handleClose();
-								}}							>
-								Добавление бухгалтеров и администраторов
-							</Button> */}
+							
 						</Container>
 					</Offcanvas.Body>
 				</Offcanvas>

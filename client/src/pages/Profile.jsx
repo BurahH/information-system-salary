@@ -23,16 +23,19 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import CreateBonus from '../components/modals/CreateBonus';
 import CreateDisease from '../components/modals/CreateDisease';
+import { MdModeEdit, MdTitle } from 'react-icons/md';
+import EditProfile from '../components/modals/EditProfile';
 
 const Profile = () => {
 	const { id } = useParams();
 
 	const [year, setYear] = useState('');
 	const [month, setMonth] = useState('');
-  const [newBonusVisible, setNewBonusVisible] = useState(false);
-  const [newDiseaseVisible, setNewDiseaseVisible] = useState(false);
+	const [newBonusVisible, setNewBonusVisible] = useState(false);
+	const [newDiseaseVisible, setNewDiseaseVisible] = useState(false);
+	const [editVisible, setEditVisible] = useState(false);
 
-	const { data } = useQuery({
+	const { data, refetch } = useQuery({
 		queryKey: [`user${id}`, id],
 		queryFn: async () => getUserById(id),
 		enabled: !!id,
@@ -70,7 +73,16 @@ const Profile = () => {
 			{data && (
 				<Row className="d-flex">
 					<Col>
-						<h1>{data.name} </h1>
+						<h1>
+							{data.name}
+							<span title="Редактировать информацию">
+								<MdModeEdit
+									size={35}
+									style={{ marginBottom: 5, marginLeft: 10, cursor: 'pointer' }}
+                  onClick={() => setEditVisible(true)}
+								/>
+							</span>
+						</h1>
 					</Col>
 					<Col className="d-flex">
 						<h4 className="ms-auto mt-3">
@@ -99,7 +111,12 @@ const Profile = () => {
 						<Accordion.Item eventKey="0">
 							<Accordion.Header>Надбавки</Accordion.Header>
 							<Accordion.Body>
-								<Button variant="outline-dark" onClick={() => setNewBonusVisible(true)}>Добавить надбавку</Button>
+								<Button
+									variant="outline-dark"
+									onClick={() => setNewBonusVisible(true)}
+								>
+									Добавить надбавку
+								</Button>
 								{bonuses?.data?.length ? (
 									<Table striped bordered hover className="text-center mt-4">
 										<thead>
@@ -133,7 +150,12 @@ const Profile = () => {
 						<Accordion.Item eventKey="0">
 							<Accordion.Header>Болезни</Accordion.Header>
 							<Accordion.Body>
-								<Button variant="outline-dark" onClick={() => setNewDiseaseVisible(true)}>Добавить болезнь</Button>
+								<Button
+									variant="outline-dark"
+									onClick={() => setNewDiseaseVisible(true)}
+								>
+									Добавить болезнь
+								</Button>
 								{diseases?.data?.length ? (
 									<Table striped bordered hover className="text-center mt-4">
 										<thead>
@@ -163,7 +185,7 @@ const Profile = () => {
 					</Accordion>
 				</Col>
 			</Row>
-      <hr className='mt-4'/>
+			<hr className="mt-4" />
 			<Row>
 				<h1 className="mt-4">Отчет</h1>
 				<Form className="d-flex">
@@ -296,8 +318,24 @@ const Profile = () => {
 					</Row>
 				)}
 			</Row>
-      <CreateBonus show={newBonusVisible} onHide={() => setNewBonusVisible(false)} id={id} refetch={() => bonuses.refetch()}/>
-      <CreateDisease show={newDiseaseVisible} onHide={() => setNewDiseaseVisible(false)} id={id} refetch={() => diseases.refetch()}/>
+			<CreateBonus
+				show={newBonusVisible}
+				onHide={() => setNewBonusVisible(false)}
+				id={id}
+				refetch={() => bonuses.refetch()}
+			/>
+			<CreateDisease
+				show={newDiseaseVisible}
+				onHide={() => setNewDiseaseVisible(false)}
+				id={id}
+				refetch={() => diseases.refetch()}
+			/>
+			<EditProfile
+				show={editVisible}
+				onHide={() => setEditVisible(false)}
+				refetch={refetch}
+        initInfo={data}
+			/>
 		</Container>
 	);
 };

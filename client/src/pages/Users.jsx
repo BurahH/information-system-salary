@@ -35,7 +35,7 @@ const Users = () => {
 					/>
 				</Form>
 			</Row>
-			<Table striped bordered hover className="text-center mt-4">
+			<Table striped bordered hover className="text-center mt-4 mb-5">
 				<thead>
 					<tr className='table-primary'>
 						<th>#</th>
@@ -64,7 +64,7 @@ const Users = () => {
 								<td>{user.salary}</td>
 								<td>{user.family}</td>
 								<td>{user.children}</td>
-								<td>{user.roles || 'Работник'}</td>
+								<td>{user.roles ? user.roles === 'user' ? 'Бухгалтер' : 'Администратор' :'Работник' }</td>
 								<td>{user.active ? 'Активный' : 'Заблокированый'}</td>
 							</tr>
 						))}

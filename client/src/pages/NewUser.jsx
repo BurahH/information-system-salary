@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Container, Form, Row, Button, Col } from 'react-bootstrap';
+import { createNewEmployee, createNewUser } from '../API/userAPI';
 
 const initInfo = {
 	personalNumber: '',
@@ -8,14 +9,39 @@ const initInfo = {
 	salary: '',
 	family: '',
 	children: 0,
+	login: '',
+	password: '',
+	roles: '',
 };
 
 const NewUser = () => {
 	const [userInfo, setUserInfo] = useState(initInfo);
 	const [isUser, setIsUser] = useState(false);
 
-	const createUser = () => {
-		alert('BIP');
+	const createUser = async () => {
+		if (!isUser) {
+			await createNewEmployee(
+				userInfo.personalNumber,
+				userInfo.name,
+				userInfo.position,
+				Number(userInfo.salary),
+				userInfo.family,
+				Number(userInfo.children)
+			);
+		} else {			
+			await createNewUser(
+			userInfo.personalNumber,
+			userInfo.name,
+			userInfo.position,
+			Number(userInfo.salary),
+			userInfo.family,
+			Number(userInfo.children),
+			userInfo.login,
+			userInfo.password,
+			userInfo.roles
+			)
+		}
+		setUserInfo(initInfo);
 	};
 
 	return (
@@ -31,35 +57,79 @@ const NewUser = () => {
 							<hr />
 							<Form.Group className="mb-3" controlId="personalNumber">
 								<Form.Label className="fw-bold">Номер сотрудника</Form.Label>
-								<Form.Control placeholder="Введите номер сотрудника..." />
+								<Form.Control
+									placeholder="Введите номер сотрудника..."
+									value={userInfo.personalNumber}
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, personalNumber: e.target.value };
+										})
+									}
+								/>
 							</Form.Group>
 
 							<Form.Group className="mb-3" controlId="nameUser">
 								<Form.Label className="fw-bold">ФИО</Form.Label>
-								<Form.Control placeholder="Введите имя сотрудника..." />
+								<Form.Control
+									value={userInfo.name}
+									placeholder="Введите имя сотрудника..."
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, name: e.target.value };
+										})
+									}
+								/>
 							</Form.Group>
 
 							<Form.Group className="mb-3" controlId="positionUser">
 								<Form.Label className="fw-bold">Должность</Form.Label>
-								<Form.Control placeholder="Введите должность сотрудника..." />
+								<Form.Control
+									value={userInfo.position}
+									placeholder="Введите должность сотрудника..."
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, position: e.target.value };
+										})
+									}
+								/>
 							</Form.Group>
 
 							<Form.Group className="mb-3" controlId="salaryUser">
 								<Form.Label className="fw-bold">Зарплата</Form.Label>
 								<Form.Control
 									type="number"
+									value={userInfo.salary}
 									placeholder="Введите зарплату сотрудника..."
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, salary: e.target.value };
+										})
+									}
 								/>
 							</Form.Group>
 							<Form.Group className="mb-3" controlId="familyUser">
 								<Form.Label className="fw-bold">Семейное положение</Form.Label>
-								<Form.Control placeholder="Введите семейное положение сотрудника..." />
+								<Form.Control
+									value={userInfo.family}
+									placeholder="Введите семейное положение сотрудника..."
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, family: e.target.value };
+										})
+									}
+								/>
 							</Form.Group>
 							<Form.Group className="mb-3" controlId="childreUser">
 								<Form.Label className="fw-bold">Количество детей</Form.Label>
 								<Form.Control
 									type="number"
+									value={userInfo.children}
 									placeholder="Введите количество детей сотрудника..."
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, children: e.target.value };
+										})
+									}
 								/>
 							</Form.Group>
 						</Form>
@@ -69,29 +139,48 @@ const NewUser = () => {
 							<h2>Учетная запись</h2>
 							<hr />
 
-							<Form.Group className="mb-3" controlId="family">
+							<Form.Group className="mb-3" controlId="loginUser">
 								<Form.Label className="fw-bold">Логин</Form.Label>
 								<Form.Control
 									disabled={!isUser}
 									placeholder="Введите логин..."
+									value={userInfo.login}
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, login: e.target.value };
+										})
+									}
 								/>
 							</Form.Group>
 
-							<Form.Group className="mb-3" controlId="family">
+							<Form.Group className="mb-3" controlId="passwordUser">
 								<Form.Label className="fw-bold">Пароль</Form.Label>
 								<Form.Control
 									disabled={!isUser}
 									placeholder="Введите пароль..."
+									type="password"
+									value={userInfo.password}
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, password: e.target.value };
+										})
+									}
 								/>
 							</Form.Group>
 
-							<Form.Group className="mb-3" controlId="family">
+							<Form.Group className="mb-3" controlId="roleUser">
 								<Form.Label className="fw-bold">Роль</Form.Label>
 
 								<Form.Select
 									className="mb-3"
 									aria-label="Default select example"
 									disabled={!isUser}
+									value={userInfo.roles}
+									onChange={e =>
+										setUserInfo(prev => {
+											return { ...prev, roles: e.target.value };
+										})
+									}
 								>
 									<option value={0} hidden>
 										Выберете роль
@@ -120,6 +209,7 @@ const NewUser = () => {
 					className="mt-3"
 					type="submit"
 					style={{ margin: '0 auto', width: 300 }}
+					onClick={createUser}
 				>
 					Создать сотрудника
 				</Button>
