@@ -11,13 +11,6 @@ const Users = () => {
 	const [name, setName] = useState('');
 	const { data } = useQuery({ queryKey: ['users'], queryFn: getUsers });
 
-  const test = async () => {
-    const { dat } = await $API.get('http://26.162.53.239:8080/employee');
-    console.log(dat);
-  }
-
-  test();
-  
 	const searchedUsers = useMemo(() => {
 		if (name) {
 			return data.filter(user => user.name.includes(name));
@@ -42,7 +35,7 @@ const Users = () => {
 					/>
 				</Form>
 			</Row>
-			<Table striped bordered hover className="text-center mt-4">
+			<Table striped bordered hover className="text-center mt-4 mb-5">
 				<thead>
 					<tr className='table-primary'>
 						<th>#</th>

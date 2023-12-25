@@ -4,10 +4,10 @@ export default class UserStore {
 	constructor() {
 		this._isAuth = false;
 		this._info = {
-			id: 4,
-			name: 'Иванов Иван Иванович',
-			login: 'iiIvanov',
-			role: 'Администратор',
+			id: null,
+			name: null,
+			login: null,
+			role: null,
 		};
 
 		makeAutoObservable(this);

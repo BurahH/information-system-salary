@@ -15,7 +15,6 @@ const Payments = () => {
 		queryKey: ['payments', year, month],
 		queryFn: async () => getPayments(month, year),
 		enabled: !!year && !!month,
-    retry: 0
 	});
 
 	const [final, setFinal] = useState({ sum: 0, NDS: 0, vidacha: 0 });
