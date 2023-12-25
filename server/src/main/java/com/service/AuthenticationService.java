@@ -31,17 +31,4 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
-
-    public AuthenticationResponse register(RegisterRequest request) {
-        User user = new User();
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRoles(Role.USER);
-        user.setLogin(request.getUsername());
-        user.setName(request.getName());
-        repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
 }

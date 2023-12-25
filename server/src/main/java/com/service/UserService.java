@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
         User user = findById(id);
         if(user != null)
         {
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
             userRepos.save(user);
             return "Успех";
         }

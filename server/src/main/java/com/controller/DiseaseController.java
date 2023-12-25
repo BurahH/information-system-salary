@@ -14,12 +14,7 @@ import java.util.List;
 
 @RestController
 public class DiseaseController {
-    @Autowired
-    DiseaseRepos diseaseRepos;
-    @Autowired
-    UserRepos userRepos;
-    @Autowired
-    EmployeeRepos employeeRepos;
+
     @Autowired
     DiseaseService diseaseService;
 

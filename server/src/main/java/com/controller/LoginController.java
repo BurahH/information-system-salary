@@ -2,7 +2,6 @@ package com.controller;
 
 import com.domain.AuthenticationResponse;
 import com.domain.LoginDto;
-import com.domain.RegisterRequest;
 import com.service.AuthenticationService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,4 @@ public class LoginController {
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
-
-    /*@PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
-        return ResponseEntity.ok(service.register(request));
-    }*/
 }
