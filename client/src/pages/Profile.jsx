@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	Col,
 	Container,
@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import {
+  changeUserPass,
 	getBonusesByUserId,
 	getDiseasesByUserId,
 	getUserById,
@@ -25,15 +26,20 @@ import CreateBonus from '../components/modals/CreateBonus';
 import CreateDisease from '../components/modals/CreateDisease';
 import { MdModeEdit, MdTitle } from 'react-icons/md';
 import EditProfile from '../components/modals/EditProfile';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../main';
 
-const Profile = () => {
+const Profile = observer(() => {
 	const { id } = useParams();
+
+	const { user } = useContext(Context);
 
 	const [year, setYear] = useState('');
 	const [month, setMonth] = useState('');
 	const [newBonusVisible, setNewBonusVisible] = useState(false);
 	const [newDiseaseVisible, setNewDiseaseVisible] = useState(false);
 	const [editVisible, setEditVisible] = useState(false);
+  const [newPass, setNewPass] = useState({new: '', confirm: ''});
 
 	const { data, refetch } = useQuery({
 		queryKey: [`user${id}`, id],
@@ -67,9 +73,16 @@ const Profile = () => {
 		setMonth(e.target.value);
 	};
 
+  const handlePassChange = async () => {
+    const res = await changeUserPass(id, newPass.new);
+    setNewPass({new: '', confirm: ''})
+  }
+
 	return (
 		<Container>
-			<Row className="fs-3 fw-bold justify-content-center">ПРОФИЛЬ</Row>
+			<Row className="fs-3 fw-bold justify-content-center">
+				ПРОФИЛЬ {id == user.info.id}
+			</Row>
 			{data && (
 				<Row className="d-flex">
 					<Col>
@@ -79,7 +92,7 @@ const Profile = () => {
 								<MdModeEdit
 									size={35}
 									style={{ marginBottom: 5, marginLeft: 10, cursor: 'pointer' }}
-                  onClick={() => setEditVisible(true)}
+									onClick={() => setEditVisible(true)}
 								/>
 							</span>
 						</h1>
@@ -185,9 +198,36 @@ const Profile = () => {
 					</Accordion>
 				</Col>
 			</Row>
+			{id == user.info.id && (
+				<>
+					<hr className="mt-3" />
+					<Row>
+						<h1 className="mt-2">Изменение пароля</h1>
+            <Form>
+            <Form.Group className="mb-3" controlId="personalNumber">
+								<Form.Label className="fw-bold">Новый пароль</Form.Label>
+								<Form.Control
+									placeholder="Введите новый пароль..."
+									value={newPass.new}
+                  onChange={e => setNewPass(prev => {return {...prev, new: e.target.value}})}
+								/>
+							</Form.Group>
+              <Form.Group className="mb-3" controlId="personalNumber">
+								<Form.Label className="fw-bold">Подтверждение</Form.Label>
+								<Form.Control
+									placeholder="Подтвердите пароль..."
+                  value={newPass.confirm}
+                  onChange={e => setNewPass(prev => {return {...prev, confirm: e.target.value}})}									
+								/>
+							</Form.Group>
+              <Button onClick={handlePassChange}>Изменить</Button>
+            </Form>
+					</Row>
+				</>
+			)}
 			<hr className="mt-4" />
 			<Row>
-				<h1 className="mt-4">Отчет</h1>
+				<h1 className="mt-2">Отчет</h1>
 				<Form className="d-flex">
 					<Form.Select
 						aria-label="Year"
@@ -334,10 +374,10 @@ const Profile = () => {
 				show={editVisible}
 				onHide={() => setEditVisible(false)}
 				refetch={refetch}
-        initInfo={data}
+				initInfo={data}
 			/>
 		</Container>
 	);
-};
+});
 
 export default Profile;
