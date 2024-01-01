@@ -70,7 +70,7 @@ const NavBar = observer(() => {
 								>
 									Профиль
 								</NavDropdown.Item>
-								<NavDropdown.Item>Роль: {user.info.role}</NavDropdown.Item>
+								<NavDropdown.Item>Роль: {user.info.role === 'user' ? 'Бухгалтер' : 'Администратор'}</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item>
 									<Button
