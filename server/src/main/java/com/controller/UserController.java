@@ -1,7 +1,6 @@
 package com.controller;
 
 import com.domain.*;
-import com.repos.*;
 import com.service.EmployeeService;
 import com.service.PaymentService;
 import com.service.UserService;
@@ -66,9 +65,9 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping("/user/edit/password")
-    public String editPassswordUser(@RequestParam long id, @RequestBody String password)
+    public String editPasswordUser(@RequestParam long id, @RequestBody LoginDto password)
     {
-        return userService.editPassword(id, password);
+        return userService.editPassword(id, password.getPassword());
     }
 
     @CrossOrigin

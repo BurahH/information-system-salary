@@ -19,6 +19,8 @@ public class PaymentService {
     public List<Payments> getPayment(int month, int year) {
         List<Payments> payments = paymentRepos.findAll();
         List<Payments> getPayments = new ArrayList<>();
+        if(month == 0)
+            year += 1;
         for (Payments payments1 : payments) {
             long date = payments1.getDayPayment();
             GregorianCalendar gregorianCalendar = new GregorianCalendar();

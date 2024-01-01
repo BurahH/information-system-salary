@@ -37,7 +37,7 @@ public class PaymentTime {
         int oldMonth = gregorianCalendar2.get(Calendar.MONTH);
         if(newMonth > oldMonth){
             paymentSave();
-        } else if ((newMonth == 1) && (oldMonth == 12))
+        } else if ((newMonth == 0) && (oldMonth == 11))
         {
             paymentSave();
         }
