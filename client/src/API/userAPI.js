@@ -46,7 +46,6 @@ export const createNewUser = async (
 };
 
 export const loginUser = async (username, password) => {
-	console.log(username, password);
 	const { data } = await $API.post('http://26.162.53.239:8080/authenticate', {
 		username,
 		password,
@@ -65,25 +64,50 @@ export const getUsers = async () => {
 };
 
 export const updateInfo = async (
-  id,
+	id,
 	personalNumber,
 	name,
 	position,
 	salary,
 	family,
-	children,
+	children
 ) => {
-	const { data } = await $API.post(`http://26.162.53.239:8080/employee/edit?id=${id}`, {    
-		personalNumber,
-		name,
-		position,
-		salary,
-		family,
-		children,
-	});
+	const { data } = await $API.post(
+		`http://26.162.53.239:8080/employee/edit?id=${id}`,
+		{
+			personalNumber,
+			name,
+			position,
+			salary,
+			family,
+			children,
+		}
+	);
 
-  return data
+	return data;
 };
+
+export const changeUserPass = async (id, password) => {
+	const { data } = await $API.post(
+		`http://26.162.53.239:8080/user/edit/password?id=${id}`,
+    {password}
+	);
+	return data;
+};
+
+export const blockUser = async (id) => {
+  const {data} = await $API.post(
+    `http://26.162.53.239:8080/block?id=${id}`
+  )
+  return data;
+}
+
+export const unblockUser = async (id) => {
+  const {data} = await $API.post(
+    `http://26.162.53.239:8080/unblock?id=${id}`
+  )
+  return data;
+}
 
 export const getUserById = async id => {
 	const { data } = await $API.get(

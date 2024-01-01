@@ -13,3 +13,8 @@ export const getTimeStamp = (date) => {
 	const timeDate = new Date(year, month - 1 , day);
 	return timeDate.getTime();
 };
+
+export const getMoney = (money) => {
+  const formattedMoney = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(money);
+  return formattedMoney;
+}

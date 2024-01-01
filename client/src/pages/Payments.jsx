@@ -3,7 +3,7 @@ import { Button, Container, Row, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
-import { getDate, getNDS } from '../utils/helpers';
+import { getDate, getMoney, getNDS } from '../utils/helpers';
 import { getPayments } from '../API/paymentsAPI';
 import { useQuery } from '@tanstack/react-query';
 
@@ -49,6 +49,8 @@ const Payments = () => {
 		setMonth(e.target.value);
 	};
 
+  console.log(getMoney(1230020))
+
 	return (
 		<Container className="mb-4">
 			<Row className="fs-3 fw-bold justify-content-center mb-2">ВЫПЛАТЫ</Row>
@@ -79,7 +81,7 @@ const Payments = () => {
 						value={month}
 						onChange={handleMonthChange}
 					>
-						<option value={0} hidden>
+						<option value={12} hidden>
 							Выберете месяц
 						</option>
 						<option value={1}>Январь</option>
@@ -93,7 +95,7 @@ const Payments = () => {
 						<option value={9}>Сентябрь</option>
 						<option value={10}>Октябрь</option>
 						<option value={11}>Ноябрь</option>
-						<option value={12}>Декабрь</option>
+						<option value={0}>Декабрь</option>
 					</Form.Select>
 				</Form>
 			</Row>
@@ -104,13 +106,13 @@ const Payments = () => {
 							<tr className='table-primary'>
 								<th>Номер сотрудника</th>
 								<th>ФИО</th>
-								<th>Зарплата (руб.)</th>
-								<th>Надбавки (руб.)</th>
+								<th>Зарплата</th>
+								<th>Надбавки</th>
 								<th>Дней болезни</th>
 								<th>Дата выплаты</th>
-								<th>Начислено (руб.)</th>
-								<th>НДС (руб.)</th>
-								<th>К выдаче (руб.)</th>
+								<th>Начислено</th>
+								<th>НДС</th>
+								<th>К выдаче</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -119,15 +121,15 @@ const Payments = () => {
 									<tr key={payment.id}>
 										<td>{payment.employee.personalNumber}</td>
 										<td>{payment.employee.name}</td>
-										<td>{payment.salary}</td>
-										<td>{payment.summaAllowance}</td>
+										<td>{getMoney(payment.salary)}</td>
+										<td>{getMoney(payment.summaAllowance)}</td>
 										<td>{payment.dayDisease}</td>
 										<td>{getDate(payment.dayPayment)}</td>
-										<td>{payment.summaPayment}</td>
-										<td>{getNDS(payment.summaPayment, payment.salary)}</td>
+										<td>{getMoney(payment.summaPayment)}</td>
+										<td>{getMoney(getNDS(payment.summaPayment, payment.salary))}</td>
 										<td className="fw-bold">
-											{payment.summaPayment -
-												getNDS(payment.summaPayment, payment.salary)}
+											{getMoney(payment.summaPayment -
+												getNDS(payment.summaPayment, payment.salary))}
 										</td>
 									</tr>
 								))}
@@ -135,9 +137,9 @@ const Payments = () => {
 								<td colSpan={6} className="text-end">
 									Итого:
 								</td>
-								<td>{final.sum} </td>
-								<td>{final.NDS}</td>
-								<td className="fw-bold">{final.vidacha}</td>
+								<td>{getMoney(Math.round(final.sum * 100) / 100)}</td>
+								<td>{getMoney(Math.round(final.NDS * 100) / 100)}</td>
+								<td className="fw-bold">{getMoney(Math.round(final.vidacha * 100) / 100)}</td>
 							</tr>
 						</tbody>
 					</Table>
