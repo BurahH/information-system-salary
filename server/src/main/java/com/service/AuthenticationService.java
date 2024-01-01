@@ -1,10 +1,10 @@
 package com.service;
 
 import com.config.JwtService;
-import com.domain.*;
+import com.domain.AuthenticationResponse;
+import com.domain.LoginDto;
 import com.repos.UserRepos;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

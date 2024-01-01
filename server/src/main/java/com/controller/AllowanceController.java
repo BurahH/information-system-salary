@@ -1,11 +1,6 @@
 package com.controller;
 
 import com.domain.Allowance;
-import com.domain.Employee;
-import com.domain.User;
-import com.repos.AllowanceRepos;
-import com.repos.EmployeeRepos;
-import com.repos.UserRepos;
 import com.service.AllowanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

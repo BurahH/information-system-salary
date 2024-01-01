@@ -1,13 +1,16 @@
 package com.controller;
 
-import com.domain.*;
+import com.domain.Employee;
+import com.domain.LoginDto;
+import com.domain.Payments;
+import com.domain.User;
 import com.service.EmployeeService;
 import com.service.PaymentService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
 
 @RestController
